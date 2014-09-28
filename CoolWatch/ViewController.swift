@@ -2,6 +2,8 @@
 //  ViewController.swift
 //  CoolWatch
 //
+//  Displays a clcok inside the visual of Apple Watch on an iOS device
+//
 //  Created by TORREY NOMMESEN
 //         and BEN MORROW
 //          on 9/27/14
@@ -23,8 +25,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var minutesLabel: UILabel!
     
-    @IBAction func buttonTapped() { // on Button Tap
-        // add 1 hour and 11 minutes
+    @IBAction func buttonTapped() { // on Button Tap increment by 1 hour and 11 minutes for demo
         simulatedDate = simulatedDate.dateByAddingTimeInterval(4260)
         drawCircles()
     }
@@ -57,73 +58,29 @@ class ViewController: UIViewController {
         dateFormatter.dateFormat = "h"
         var hours = dateFormatter.stringFromDate(simulatedDate)
         
-        
         var innerChunk:CGFloat = 0
         var midChunk:CGFloat = 0
         var outerChunk:CGFloat = 0
         
-        switch hours {
-        case "1" :
-            innerChunk = 0.25
-            midChunk = 0
-            outerChunk = 0
-        case "2" :
-            innerChunk = 0.50
-            midChunk = 0
-            outerChunk = 0
-        case "3" :
-            innerChunk = 0.75
-            midChunk = 0
-            outerChunk = 0
-        case "4" :
-            innerChunk = 1
-            midChunk = 0
-            outerChunk = 0
-        case "5" :
-            midChunk = 0.25
-            innerChunk = 1
-            outerChunk = 0
-        case "6" :
-            midChunk = 0.50
-            innerChunk = 1
-            outerChunk = 0
-        case "7" :
-            midChunk = 0.75
-            innerChunk = 1
-            outerChunk = 0
-        case "8" :
-            midChunk = 1
-            innerChunk = 1
-            outerChunk = 0
-        case "9" :
-            outerChunk = 0.25
-            innerChunk = 1
-            midChunk = 1
-        case "10" :
-            outerChunk = 0.50
-            innerChunk = 1
-            midChunk = 1
-        case "11" :
-            outerChunk = 0.75
-            innerChunk = 1
-            midChunk = 1
-        case "12" :
-            outerChunk = 1
-            innerChunk = 1
-            midChunk = 1
+        switch hours { // dictates the display per hour
+        case "1" : innerChunk = 0.25; midChunk = 0; outerChunk = 0
+        case "2" : innerChunk = 0.50; midChunk = 0; outerChunk = 0
+        case "3" : innerChunk = 0.75; midChunk = 0; outerChunk = 0
+        case "4" : innerChunk = 1; midChunk = 0; outerChunk = 0
+        case "5" : midChunk = 0.25; innerChunk = 1; outerChunk = 0
+        case "6" : midChunk = 0.50; innerChunk = 1; outerChunk = 0
+        case "7" : midChunk = 0.75; innerChunk = 1; outerChunk = 0
+        case "8" : midChunk = 1; innerChunk = 1; outerChunk = 0
+        case "9" : outerChunk = 0.25; innerChunk = 1; midChunk = 1
+        case "10" : outerChunk = 0.50; innerChunk = 1; midChunk = 1
+        case "11" : outerChunk = 0.75; innerChunk = 1; midChunk = 1
+        case "12" : outerChunk = 1; innerChunk = 1; midChunk = 1
         default : break
         }
-
-        
-//        for sublayer in drawingView.layer.sublayers {
-//            sublayer.removeFromSuperlayer()
-//        }
-        //println(drawingView.layer.sublayers)
         
         let centerPoint = CGPoint (x: drawingView.bounds.width / 2, y: drawingView.bounds.height / 2)
         
-        // inner circle
-        
+        // inner circle - hours 1-4
         let innerCircleRadius : CGFloat = drawingView.bounds.width / 2 * 0.35
         
         var innerCirclePath = UIBezierPath(arcCenter: centerPoint, radius: innerCircleRadius, startAngle: CGFloat(-0.5 * M_PI), endAngle: CGFloat(1.5 * M_PI), clockwise: true    )
@@ -138,8 +95,7 @@ class ViewController: UIViewController {
         
         drawingView.layer.addSublayer(innerCircle)
         
-        
-        // middle circle
+        // middle circle - hours 5-8
         let midCircleRadius : CGFloat = drawingView.bounds.width / 2 * 0.59
         
         var midPath = UIBezierPath(arcCenter: centerPoint, radius: midCircleRadius, startAngle: CGFloat(-0.5 * M_PI), endAngle: CGFloat(1.5 * M_PI), clockwise: true    )
@@ -154,8 +110,7 @@ class ViewController: UIViewController {
         
         drawingView.layer.addSublayer(midCircle)
         
-        
-        // outer circle
+        // outer circle - hours 9-12
         let outerCircleRadius : CGFloat = drawingView.bounds.width / 2 * 0.83
         
         var outerCirclePath = UIBezierPath(arcCenter: centerPoint, radius: outerCircleRadius, startAngle: CGFloat(-0.5 * M_PI), endAngle: CGFloat(1.5 * M_PI), clockwise: true    )
@@ -173,9 +128,6 @@ class ViewController: UIViewController {
         innerCircle.strokeEnd = innerChunk
         midCircle.strokeEnd = midChunk
         outerCircle.strokeEnd = outerChunk
-
-        // removed becuase it over-wrote the button
-//        self.view.addSubview(drawingView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -183,7 +135,4 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
 }
-
-
